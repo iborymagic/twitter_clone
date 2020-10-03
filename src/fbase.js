@@ -1,4 +1,5 @@
 import * as firebase from 'firebase/app';
+import "firebase/auth";
 
 const firebaseConfig = {
     apiKey: process.env.REACT_APP_API_KEY,
@@ -13,4 +14,7 @@ const firebaseConfig = {
 // .env의 사용은 실제 빌드 시에는 보안에 도움이 되지 않는다. 깃헙에 올릴 때만 도움이 되는 것.
 // .env는 루트 디렉토리에 있어야 함.
 
-export default firebase.initializeApp(firebaseConfig);
+firebase.initializeApp(firebaseConfig);
+
+export const firebaseInstance = firebase;
+export const authService = firebase.auth();

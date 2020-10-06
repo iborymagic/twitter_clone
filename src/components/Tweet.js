@@ -1,4 +1,4 @@
-import { dbService } from "fbase";
+import { dbService, storageService } from "fbase";
 import React, { useState } from "react";
 
 const Tweet = ({tweetObj, isOwner}) => {
@@ -10,6 +10,7 @@ const Tweet = ({tweetObj, isOwner}) => {
         if(ok) {
             // doc(document)의 id를 알고있기 때문에 삭제의 구현이 어렵지 않다.
             await dbService.doc(`tweets/${tweetObj.id}`).delete();
+            await storageService.refFromURL(tweetObj.attachmentUrl).delete();
         }
     };
 
@@ -43,6 +44,7 @@ const Tweet = ({tweetObj, isOwner}) => {
             ) : (
                 <>
                     <h4>{tweetObj.text}</h4>
+                    {tweetObj.attachmentUrl && <img src={tweetObj.attachmentUrl} width="50px" height="50px" />}
                     {/* 트윗을 삭제하거나 수정하는 버튼이 해당 트윗의 작성자에게만 보이도록 */}
                     {isOwner && (
                         <>

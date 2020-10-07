@@ -15,13 +15,23 @@ const AppRouter = ({refreshUser, isLoggedIn, userObj}) => {
                     // switch는 하위 라우터들 중 한 번에 하나의 Router만 보여줌.
                     // Log in이 되어있으면 Home 화면만 보여줌.
                     <>
-                        <Route exact path = "/">
-                            <Home userObj={userObj} />
-                        </Route>
-                        <Route exact path = "/profile">
-                            <Profile refreshUser={refreshUser} userObj={userObj} />
-                        </Route>
-                        {/*<Redirect from="*" to="/" />*/}
+                        <div style={{
+                            maxWidth : 890, 
+                            width : "100%", 
+                            margin : "0 auto", 
+                            marginTop : 80, 
+                            display : "flex", 
+                            justifyContent : "center"
+                            }}
+                        >
+                            <Route exact path = "/">
+                                <Home userObj={userObj} />
+                            </Route>
+                            <Route exact path = "/profile">
+                                <Profile refreshUser={refreshUser} userObj={userObj} />
+                            </Route>
+                            {/*<Redirect from="*" to="/" />*/}
+                        </div>
                     </>
                     // <> </>는 Fragment. 부모 요소가 없는 많은 요소들을 render 하고싶을 때, 근데 div나 span에 집어넣기는 싫을 때 사용.
                 ) : (

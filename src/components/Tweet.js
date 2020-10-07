@@ -1,5 +1,7 @@
 import { dbService, storageService } from "fbase";
 import React, { useState } from "react";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faTrash, faPencilAlt } from "@fortawesome/free-solid-svg-icons";
 
 const Tweet = ({tweetObj, isOwner}) => {
     const [editing, setEditing] = useState(false); // editing mode인지를 알려주는 boolean
@@ -32,24 +34,30 @@ const Tweet = ({tweetObj, isOwner}) => {
     };
 
     return (
-        <div key={tweetObj.id}>
+        <div className="tweet" key={tweetObj.id}>
             {editing ? (
                 <>
-                    <form onSubmit={onSubmit}>
-                        <input type="text" placeholder="Edit your tweet!" onChange={onChange} value={newTweet} required />
-                        <input type="submit" value="Update tweet" />
+                    <form onSubmit={onSubmit} className="container tweetEdit">
+                        <input type="text" placeholder="Edit your tweet!" onChange={onChange} value={newTweet} required autoFocus className="formInput"/>
+                        <input type="submit" value="Update tweet" className="formBtn" />
                     </form>
-                    <button onClick={toggleEditing}>Cancel</button>
+                    <span onClick={toggleEditing} className="formBtn cancelBtn">Cancel</span>
                 </>
             ) : (
                 <>
                     <h4>{tweetObj.text}</h4>
-                    {tweetObj.attachmentUrl && <img src={tweetObj.attachmentUrl} width="50px" height="50px" />}
+                    {tweetObj.attachmentUrl && <img alt="" src={tweetObj.attachmentUrl} />}
                     {/* 트윗을 삭제하거나 수정하는 버튼이 해당 트윗의 작성자에게만 보이도록 */}
                     {isOwner && (
                         <>
-                            <button onClick={onDeleteClick}>Delete Tweet</button>
-                            <button onClick={toggleEditing}>Edit Tweet</button>
+                            <div className="tweet__actions">
+                                <span onClick={onDeleteClick}>
+                                    <FontAwesomeIcon icon={faTrash} />
+                                </span>
+                                <span onClick={toggleEditing}>
+                                    <FontAwesomeIcon icon={faPencilAlt} />
+                                </span>
+                            </div>
                         </>
                     )}
                 </>

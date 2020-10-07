@@ -6,7 +6,7 @@ import React, { useEffect, useState } from "react";
 const Home = ({userObj}) => {
     const [tweet, setTweet] = useState("");
     const [tweets, setTweets] = useState([]);
-    const [attachment, setAttachment] = useState(); // attachment = file
+    const [attachment, setAttachment] = useState(""); // attachment = file
 
     // const getTweets = async () => {
     //     // async여야 하기 때문에 별도의 함수로 분리

@@ -12,7 +12,9 @@ const Tweet = ({tweetObj, isOwner}) => {
         if(ok) {
             // doc(document)의 id를 알고있기 때문에 삭제의 구현이 어렵지 않다.
             await dbService.doc(`tweets/${tweetObj.id}`).delete();
-            await storageService.refFromURL(tweetObj.attachmentUrl).delete();
+            if(tweetObj.attachmentUrl) {
+                await storageService.refFromURL(tweetObj.attachmentUrl).delete();
+            }
         }
     };
 

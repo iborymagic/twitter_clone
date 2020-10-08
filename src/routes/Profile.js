@@ -21,7 +21,7 @@ export default ({ refreshUser, userObj }) => {
         // creatorId라는 field path의 값이 userObj.uid와 같은 애들을 필터링해줌.
         // 원한다면, where 뒤에 또 다른 where을 연달아 사용 가능.
         // orderBy를 추가하면 index가 필요하다는 에러가 발생하는데, index 만들어주면 됨.
-        console.log(tweets.docs.map((doc) => doc.data()));
+        // console.log(tweets.docs.map((doc) => doc.data()));
     };
 
     const onChange = (e) => {

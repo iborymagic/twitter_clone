@@ -10,11 +10,11 @@ const Auth = () => {
         let provider;
         if(name === "google") {
             provider = new firebaseInstance.auth.GoogleAuthProvider();
+            await authService.signInWithPopup(provider);
         } else if(name === "github") {
             provider = new firebaseInstance.auth.GithubAuthProvider();
+            await authService.signInWithPopup(provider);
         }
-        const data = await authService.signInWithPopup(provider);
-        console.log(data);
     };
 
     return (

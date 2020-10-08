@@ -1,7 +1,7 @@
 import Tweet from "components/Tweet";
+import TweetFactory from "components/TweetFactory";
 import { dbService } from "fbase";
 import React, { useEffect, useState } from "react";
-import TweetFactory from "components/TweetFactory";
 
 const Home = ({userObj}) => {
     const [tweets, setTweets] = useState([]);
@@ -35,6 +35,7 @@ const Home = ({userObj}) => {
                 ...doc.data() 
             }));
             setTweets(tweetArray);
+        }, (error) => {
         });
     }, []);
 

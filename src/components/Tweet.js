@@ -2,6 +2,7 @@ import { dbService, storageService } from "fbase";
 import React, { useState } from "react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faTrash, faPencilAlt } from "@fortawesome/free-solid-svg-icons";
+import "components/Tweet.css";
 
 const Tweet = ({tweetObj, isOwner}) => {
     const [editing, setEditing] = useState(false); // editing mode인지를 알려주는 boolean

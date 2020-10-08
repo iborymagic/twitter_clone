@@ -1,0 +1,46 @@
+.tweetEdit .formBtn {
+    cursor: pointer;
+    margin-top: 15px;
+    margin-bottom: 5px;
+  }
+  
+.tweet {
+    margin-bottom: 20px;
+    background-color: white;
+    width: 100%;
+    max-width: 320px;
+    padding: 20px;
+    border-radius: 10px;
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    color: rgba(0, 0, 0, 0.8);
+}
+  
+.tweet h4 {
+    font-size: 14px;
+}
+  
+.tweet img {
+    right: -10px;
+    top: 20px;
+    position: absolute;
+    border-radius: 50%;
+    width: 50px;
+    height: 50px;
+    margin-top: 10px;
+}
+  
+.tweet__actions {
+    position: absolute;
+    right: 10px;
+    top: 10px;
+}
+  
+.tweet__actions span {
+    cursor: pointer;
+}
+  
+.tweet__actions span:first-child {
+    margin-right: 10px;
+}

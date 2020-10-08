@@ -3,6 +3,7 @@
 // 하나의 component는 한 가지 역할만 잘 하면 된다.
 import { authService } from "fbase";
 import React, { useState } from "react";
+import "components/AuthForm.css";
 
 const AuthForm = () => {
     const [email, setEmail] = useState("");

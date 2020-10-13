@@ -30,11 +30,19 @@ const AuthForm = () => {
             if(newAccount) {
                 // create account
                 data = await authService.createUserWithEmailAndPassword(email, password);
+                /*
+                const userInfo = {
+                    displayName : null,
+                    profileImage : null
+                }
+                
+                await dbService.collection("users").doc(data.user.uid).set(userInfo);
+                */
             } else {
                 // log in
                 data = await authService.signInWithEmailAndPassword(email, password);
             }
-            console.log(`data : ${data}`);
+            console.log(data);
         } catch(error) {
             setError(error.message);
         }

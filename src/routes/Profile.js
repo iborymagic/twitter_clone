@@ -1,11 +1,17 @@
-import { authService, dbService } from "fbase";
+import { authService, dbService, storageService } from "fbase";
 import React, { useEffect, useState } from "react";
 import { useHistory } from "react-router-dom";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faPlus, faUserCircle } from "@fortawesome/free-solid-svg-icons";
+import "routes/Profile.css";
+
 import "routes/Profile.css";
 
 export default ({ refreshUser, userObj }) => {
     const history = useHistory();
     const [newDisplayName, setNewDisplayName] = useState(userObj.displayName);
+    const [photo, setPhoto] = useState(userObj.profileImage);
+    const [submitting, setSubmitting] = useState(false);
 
     const onSignOutClick = () => {
         authService.signOut();
@@ -30,19 +36,62 @@ export default ({ refreshUser, userObj }) => {
         setNewDisplayName(value);
     }
 
+    const onFileChange = e => {
+        const {target : {files}} = e;
+        const theFile = files[0]; 
+        const reader = new FileReader();
+        reader.onloadend = finishedEvent => { // reader에 event listener 추가
+            // reader에서 파일을 load하는 이벤트(아래의 readAsDataURL로 인해 일어남)가 end되는 순간,
+            // 그 event를 finishedEvent 매개변수로 받아온다.
+            
+            // console.log(finishedEvent);
+            // 얘를 console.log 찍어보면 result라는 property가 있음.
+            // 걔를 브라우저 URL로 입력해보면 사진이 나옴.
+            const {currentTarget : {result}} = finishedEvent;
+            setPhoto(result);
+        }
+        reader.readAsDataURL(theFile); // 사진 파일을 긴 문자열로 얻음
+    };
+
     const onSubmit = async (e) => {
         e.preventDefault();
+
+        let newPhotoUrl = userObj.profileImage;
+        let displayName = userObj.displayName;
+        let changed = false;
+
+        setSubmitting(true);
+        // console.log(userObj.profileImage);
+        // console.log(photo);
+
+        //const photoRef = storageService.ref().child(`${userObj.uid}_profile/${uuidv4()}`);
+        const photoRef = storageService.ref(`profile/${userObj.uid}`); // 이렇게 하면 유저 하나당 하나의 프로필 사진
+        // 이제, 이전과 달라진 게 없으면 submit이 안먹히도록 해야됨.
+        const response = await photoRef.putString(photo, "data_url");
+        newPhotoUrl = await response.ref.getDownloadURL();
+        //console.log(await storageService.refFromURL(newPhotoUrl));
+        
+        if(newPhotoUrl !== userObj.profileImage) {
+            changed = true;
+        }
+        // console.log(newPhotoUrl);
+
         if(userObj.displayName !== newDisplayName) {
-            // displayName에 변경이 없으면, profile을 update하지 않음.
-            // firestore의 한계점이 드러나는 부분. UpdateProfile로는 displayName과 photoURL정도밖에 수정할 수 없다.
-            // 만약 유저 정보를 더 많이 담고싶다면, user라는 이름의 collection을 만들어 유저 하나 당 document를 만들고, 거기다가 정보를 저장하는 방식을 사용하면 됨.
-            const response = await userObj.updateProfile({
-                displayName : newDisplayName
+            displayName = newDisplayName;
+            changed = true;
+        }
+        
+        if(changed) {
+            await userObj.updateProfile({
+                displayName : displayName,
+                photoURL : newPhotoUrl
             });
             refreshUser();
-            // firestore에 있는 profile을 고친 후, react.js에 있는 profile도 바로 refresh 해준다. -> 화면에 실시간 적용
+            changed = false;
         }
-    }
+
+        setSubmitting(false);
+    };
 
     useEffect(() => {
         getMyTweets();
@@ -50,9 +99,22 @@ export default ({ refreshUser, userObj }) => {
 
     return(
         <div className="container">
+            <form className="profile__photoForm">
+                <div className="profile__photo">
+                    {photo ? 
+                    <img alt="" src={photo} className="profile__img" style={{backgroundImage : photo}} /> : 
+                    <FontAwesomeIcon icon={faUserCircle} color={"#727b89"} size="10x" />
+                    }
+                </div>
+                <label htmlFor="attach-file" className="profile__label">
+                    <span>Add Profile Photo</span>
+                    <FontAwesomeIcon icon={faPlus} />
+                </label>
+                <input type="file" id="attach-file" accept="image/*" onChange={onFileChange} />
+            </form>
             <form onSubmit={onSubmit} className="profileForm">
-                <input onChange={onChange} type="text" autoFocus placeholder="Display name" value={newDisplayName} className="formInput" />
-                <input type="submit" value="Update Profile" className="formBtn" style={{ marginTop : 10 }} />
+                <input onChange={onChange} type="text" autoFocus placeholder="Display name" value={newDisplayName ? newDisplayName: ""} className="formInput" />
+                <input type="submit" value={submitting ? "Submitting.." : "Update Profile"} className="formBtn" style={{ marginTop : 10 }} />
             </form>
             <span className="formBtn cancelBtn logOut" onClick={onSignOutClick}>
                 Sign Out

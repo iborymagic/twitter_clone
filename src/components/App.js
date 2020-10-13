@@ -19,7 +19,8 @@ function App() {
         setUserObj({
           displayName : user.displayName,
           uid : user.uid,
-          updateProfile : (args) => user.updateProfile(args)
+          updateProfile : (args) => user.updateProfile(args),
+          profileImage : user.photoURL
           // updateProfile은 원래 user 객체에 존재하는 메소드. 우리가 원하는 메소드를 포함한 객체를 만들기 위해 function을 하나 더 거치도록 만들어준 것. 메소드를 위한 중간 메소드.
         });
         // 근데 user 객체같은 경우는, console.log 해보면 객체의 덩어리가 너무 크다. 이런 경우에는 react.js가 state의 변화를 올바르게 파악할 수가 없음. 그래서 객체의 크기를 줄여줘야 한다.
@@ -42,8 +43,11 @@ function App() {
     setUserObj({
       displayName : user.displayName,
       uid : user.uid,
-      updateProfile : (args) => user.updateProfile(args)
+      updateProfile : (args) => user.updateProfile(args),
+      profileImage : user.photoURL
     });
+    console.log("1");
+    console.log(userObj);
   }
 
   return (

@@ -2,7 +2,7 @@ import { storageService, dbService } from "fbase";
 import React, { useState } from "react";
 import { v4 as uuidv4 } from "uuid";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faPlus, faTimes } from "@fortawesome/free-solid-svg-icons";
+import { faPlus, faTimes, faFeatherAlt } from "@fortawesome/free-solid-svg-icons";
 import "components/TweetFactory.css";
 
 const TweetFactory = ({ userObj }) => {
@@ -13,19 +13,23 @@ const TweetFactory = ({ userObj }) => {
         if(tweet === "") {
             return;
         }
+
         e.preventDefault();
         let attachmentUrl = "";
+
         if(attachment !== "") { // attachment를 올리지 않을 수도 있으므로.
             const attachmentRef = storageService.ref().child(`${userObj.uid}/${uuidv4()}`);
             const response = await attachmentRef.putString(attachment, "data_url");
             attachmentUrl = await response.ref.getDownloadURL();
         }
+
         const tweetObj = {
             text : tweet,
             createdAt : Date.now(),  
             creatorId : userObj.uid, // userObj의 uid를 creatorID로 지정. 가입된 사용자의 고유한 id임.
             attachmentUrl : attachmentUrl
         }
+        
         await dbService.collection("tweets").add(tweetObj);
         setTweet("");
         setAttachment("");
@@ -58,27 +62,36 @@ const TweetFactory = ({ userObj }) => {
     const onClearAttachment = () => setAttachment("");
 
     return (
+        <>
+        <div className="factory__hello">
+            Hello, <p className="user__name">{userObj.displayName ? userObj.displayName : 'User'}. </p>
+            <br />Let me know your feelings.
+        </div>
         <form onSubmit={onSubmit} className="factoryForm">
             <div className="factoryInput__container">
-                <input type="text" className="factoryInput_input" value={tweet} onChange={onChange} placeholder="What's on your mind?" maxLength={120}></input>
-                <input type="submit" value="&rarr;" className="factoryInput__arrow"></input>
+                <input type="text" className="factoryInput__input" value={tweet} onChange={onChange} placeholder="What's on your mind?" maxLength={120}></input>
+                <button type="submit" className="factoryInput__arrow"><FontAwesomeIcon icon={faFeatherAlt} size="lg"/></button>
             </div>
             <label htmlFor="attach-file" className="factoryInput__label">
                 <span>Add photos</span>
                 <FontAwesomeIcon icon={faPlus} />
             </label>
-            <input type="file" id="attach-file" accept="image/*" onChange={onFileChange} style={{ opacity : 0 }} />
+            <input type="file" id="attach-file" accept="image/*" onChange={onFileChange} />
             {/* 이미지 파일만 허용. 이미지 파일이기만 하면 뭐든 상관 x */}
             {attachment && 
-                <div className="factoryForm_attachment">
-                    <img alt="" src={attachment} style={{backgroundImage : attachment}} />
-                    <div className="factoryForm__clear" onClick={onClearAttachment}>
-                        <span>Remove</span>
-                        <FontAwesomeIcon icon={faTimes} />
-                    </div>
-                </div>}
+                <>
+                <div className="factoryForm__attachment">
+                    <img alt="" src={attachment} className="factoryForm__img" style={{backgroundImage : attachment}} />
+                </div>
+                <div className="factoryForm__clear" onClick={onClearAttachment}>
+                    <span>Remove</span>
+                    <FontAwesomeIcon icon={faTimes} />
+                </div>
+                </>
+            }
             {/* attachment가 있을 때만 attachment를 보여준다. */}
         </form>
+        </>
     );
 };
 

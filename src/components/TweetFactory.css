@@ -3,9 +3,9 @@
     flex-direction: column;
     align-items: center;
     width: 100%;
-  }
+}
   
-  .factoryInput__container {
+.factoryInput__container {
     display: flex;
     justify-content: space-between;
     align-items: center;
@@ -13,9 +13,9 @@
     position: relative;
     margin-bottom: 20px;
     width: 100%;
-  }
+}
   
-  .factoryInput__input {
+.factoryInput__input {
     flex-grow: 1;
     height: 40px;
     padding: 0px 20px;
@@ -24,9 +24,10 @@
     border-radius: 20px;
     font-weight: 500;
     font-size: 12px;
-  }
+    margin-top : 40px;
+}
   
-  .factoryInput__arrow {
+.factoryInput__arrow {
     position: absolute;
     right: 0;
     background-color: #04aaff;
@@ -36,37 +37,63 @@
     text-align: center;
     border-radius: 20px;
     color: white;
-  }
+    margin-top : 40px;
+    outline : none;
+    border : none;
+    cursor : pointer;
+}
   
-  .factoryInput__label {
+.factoryInput__label {
     color: #04aaff;
     cursor: pointer;
-  }
+}
   
-  .factoryInput__label span {
+.factoryInput__label span {
     margin-right: 10px;
     font-size: 12px;
-  }
+}
   
-  .factoryForm__attachment {
+.factoryForm__attachment {
     display: flex;
     flex-direction: column;
     justify-content: center;
-  }
+    width: 200px;
+    border-radius: 15px;
+    overflow : hidden;
+}
   
-  .factoryForm__attachment img {
-    height: 80px;
-    width: 80px;
-    border-radius: 40px;
-  }
+.factoryForm__attachment img {
+    width : 100%;
+    height : 100%;
+}
   
-  .factoryForm__clear {
+.factoryForm__clear {
     color: #04aaff;
     cursor: pointer;
     text-align: center;
-  }
+    margin : 20px;
+}
   
-  .factoryForm__clear span {
+.factoryForm__clear span {
     margin-right: 10px;
     font-size: 12px;
-  }
+}
+
+.factoryForm__img {
+    white-space : pre;
+}
+
+.factory__hello {
+    font-size : 1.5rem;
+    font-weight: 300;
+    padding-left : 20px;
+}
+
+.user__name {
+    display : inline-block;
+    font-weight: 500;
+}
+
+#attach-file {
+    opacity : 0;
+}

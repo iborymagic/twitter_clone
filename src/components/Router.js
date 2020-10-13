@@ -4,26 +4,19 @@ import Auth from "routes/Auth";
 import Home from "routes/Home";
 import Profile from "routes/Profile";
 import Navigation from "components/Navigation";
+import "components/Router.css";
 
 const AppRouter = ({refreshUser, isLoggedIn, userObj}) => {
     return (
         <Router>
-            {isLoggedIn && <Navigation userObj={userObj} />} 
+            {isLoggedIn && <Navigation />} 
             {/* 로그인이 되어 있을 때만 Navigation을 보여줌. */}
             <Switch> 
                 {isLoggedIn ? (
                     // switch는 하위 라우터들 중 한 번에 하나의 Router만 보여줌.
                     // Log in이 되어있으면 Home 화면만 보여줌.
                     <>
-                        <div style={{
-                            maxWidth : 890, 
-                            width : "100%", 
-                            margin : "0 auto", 
-                            marginTop : 80, 
-                            display : "flex", 
-                            justifyContent : "center"
-                            }}
-                        >
+                        <div className="router__container">
                             <Route exact path = "/">
                                 <Home userObj={userObj} />
                             </Route>

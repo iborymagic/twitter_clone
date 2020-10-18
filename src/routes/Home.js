@@ -44,7 +44,7 @@ const Home = ({userObj}) => {
         <div className="container">
             <TweetFactory userObj={userObj} />
             <div className="tweet__list">
-                {tweets.map((tweet) => (
+                {tweets.sort((a, b) => b.createdAt - a.createdAt).map((tweet) => (
                     <Tweet key={tweet.id} tweetObj={tweet} isOwner={tweet.creatorId === userObj.uid} />
                 ))}
             </div>

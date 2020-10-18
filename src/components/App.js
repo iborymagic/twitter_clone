@@ -14,11 +14,13 @@ function App() {
     // 일종의 이벤트 리스너와 같다. auth의 state에 변화가 있는지를 듣고 있다가, 변화가 생기면 그에 맞는 행동을 취함.
     // user가 로그인하거나, 로그아웃하거나 할 때 변화가 생김.
     authService.onAuthStateChanged((user) => {
+      console.log(user);
       if(user) {
         //setIsLoggedIn(true);
         setUserObj({
           displayName : user.displayName,
           uid : user.uid,
+          email : user.email,
           updateProfile : (args) => user.updateProfile(args),
           profileImage : user.photoURL
           // updateProfile은 원래 user 객체에 존재하는 메소드. 우리가 원하는 메소드를 포함한 객체를 만들기 위해 function을 하나 더 거치도록 만들어준 것. 메소드를 위한 중간 메소드.
@@ -43,17 +45,16 @@ function App() {
     setUserObj({
       displayName : user.displayName,
       uid : user.uid,
+      email : user.email,
       updateProfile : (args) => user.updateProfile(args),
       profileImage : user.photoURL
     });
-    console.log("1");
-    console.log(userObj);
   }
 
   return (
     <>
-      {init ? <AppRouter refreshUser={refreshUser} isLoggedIn={Boolean(userObj)} userObj={userObj}/> : "Initializing..."}
       <footer>&copy; {new Date().getFullYear()} Twitter Clone</footer>
+      {init ? <AppRouter refreshUser={refreshUser} isLoggedIn={Boolean(userObj)} userObj={userObj}/> : "Initializing..."}
     </>
   );
   // 초기화가 되었으면 Router를 보여주고, 아니면 숨김

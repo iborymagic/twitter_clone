@@ -1,7 +1,7 @@
 import { dbService, storageService } from "fbase";
 import React, { useState } from "react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faTrash, faPencilAlt } from "@fortawesome/free-solid-svg-icons";
+import { faTrash, faPencilAlt, faUserCircle } from "@fortawesome/free-solid-svg-icons";
 import "components/Tweet.css";
 
 const Tweet = ({tweetObj, isOwner}) => {
@@ -42,27 +42,35 @@ const Tweet = ({tweetObj, isOwner}) => {
                 <>
                     <form onSubmit={onSubmit} className="container tweetEdit">
                         <input type="text" placeholder="Edit your tweet!" onChange={onChange} value={newTweet} required autoFocus className="formInput"/>
-                        <input type="submit" value="Update tweet" className="formBtn" />
+                        <input type="submit" value="Update tweet" className="formBtn updateBtn" />
+                        <span onClick={toggleEditing} className="formBtn cancelBtn">Cancel</span>
                     </form>
-                    <span onClick={toggleEditing} className="formBtn cancelBtn">Cancel</span>
                 </>
             ) : (
                 <>
-                    <h4>{tweetObj.text}</h4>
-                    {tweetObj.attachmentUrl && <img alt="" src={tweetObj.attachmentUrl} />}
-                    {/* 트윗을 삭제하거나 수정하는 버튼이 해당 트윗의 작성자에게만 보이도록 */}
-                    {isOwner && (
-                        <>
-                            <div className="tweet__actions">
-                                <span onClick={onDeleteClick}>
-                                    <FontAwesomeIcon icon={faTrash} />
-                                </span>
-                                <span onClick={toggleEditing}>
-                                    <FontAwesomeIcon icon={faPencilAlt} />
-                                </span>
-                            </div>
-                        </>
-                    )}
+                    
+                    {tweetObj.creatorImage ? <div className="creator_img_frame"><img className="creator_img" alt="" src={tweetObj.creatorImage} /></div> : <FontAwesomeIcon icon={faUserCircle} size="3x" color={"gray"} />}
+                
+                    <div className="tweet_content">
+                        <h1>{tweetObj.creatorName ? tweetObj.creatorName : tweetObj.creatorMail}</h1>
+                        <h2>{tweetObj.creatorMail}</h2>
+                        <h4>{tweetObj.text}</h4>
+                        {tweetObj.attachmentUrl && <div className="tweet_imgFrame"><img className="tweet_img" alt="" src={tweetObj.attachmentUrl} /></div>}
+                        {/* 트윗을 삭제하거나 수정하는 버튼이 해당 트윗의 작성자에게만 보이도록 */}
+                        {isOwner && (
+                            <>
+                                <div className="tweet__actions">
+                                    <span onClick={onDeleteClick}>
+                                        <FontAwesomeIcon icon={faTrash} color={"white"} />
+                                    </span>
+                                    <span onClick={toggleEditing}>
+                                        <FontAwesomeIcon icon={faPencilAlt} color={"white"} />
+                                    </span>
+                                </div>
+                            </>
+                        )}
+                    </div>
+                
                 </>
             )}
         </div>

@@ -16,6 +16,11 @@ body {
     Ubuntu, Cantarell, "Open Sans", "Helvetica Neue", sans-serif;
   font-size: 14px;
   color: white;
+  overflow-y : scroll;
+}
+
+body::-webkit-scrollbar {
+  display : none;
 }
 
 button {
@@ -46,26 +51,27 @@ form {
 
 .formInput {
   width: 100%;
+  margin-top : 5px;
   padding: 10px 20px;
   border-radius: 20px;
-  border: 1px solid black;
+  border: 1px solid #04aaff;
   text-align: center;
-  background-color: white;
-  color: black;
+  background-color: transparent;
+  color: white;
 }
 
 .formBtn {
   cursor: pointer;
   width: 100%;
-  padding: 7px 20px;
+  padding: 10px 20px;
   text-align: center;
   color: white;
   border-radius: 20px;
-  background-color: #04aaff;
   cursor: pointer;
 }
 
 .cancelBtn {
   cursor: pointer;
+  margin-top : 5px;
   background-color: tomato;
 }

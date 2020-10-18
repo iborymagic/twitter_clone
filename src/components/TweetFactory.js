@@ -27,6 +27,9 @@ const TweetFactory = ({ userObj }) => {
             text : tweet,
             createdAt : Date.now(),  
             creatorId : userObj.uid, // userObj의 uid를 creatorID로 지정. 가입된 사용자의 고유한 id임.
+            creatorName : userObj.displayName,
+            creatorImage : userObj.profileImage,
+            creatorMail : userObj.email,
             attachmentUrl : attachmentUrl
         }
         

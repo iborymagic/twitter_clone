@@ -15,12 +15,13 @@ const Tweet = ({tweetObj, userObj, isOwner}) => {
             setLike(true);
         }
 
-        const shareBtn = document.querySelector('.tweet__share');
+        const shareBtn = document.getElementById(tweetObj.id);
         shareBtn.addEventListener("click", shareTweet);
     }, []);
 
     const shareTweet = () => {
-        const content = document.querySelector('.tweet_content h4');
+        const startNode = document.getElementById(tweetObj.id);
+        const content = startNode.parentNode.parentNode.querySelector('h4');
 
         const text = tweetObj.text;
         const tempInput = document.createElement("input");
@@ -30,7 +31,7 @@ const Tweet = ({tweetObj, userObj, isOwner}) => {
         tempInput.select();
         document.execCommand('copy'); // 클립보드에 복사
         content.removeChild(tempInput);
-        alert('트윗이 클립보드에 복사되었습니다.');
+        alert('Tweet has copied to your clipboard.');
     };
 
     const onDeleteClick = async () => {
@@ -115,7 +116,7 @@ const Tweet = ({tweetObj, userObj, isOwner}) => {
                             <span onClick={toggleLike}>
                                 <FontAwesomeIcon icon={faHeart} size={"lg"} color={like ? "#ff4ca2" : "gray"} />
                             </span>
-                            <span className="tweet__share">
+                            <span id={tweetObj.id}>
                                 <FontAwesomeIcon icon={faShare} size={"lg"} color={"gray"} />
                             </span>
                         </div>

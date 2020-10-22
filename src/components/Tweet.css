@@ -71,6 +71,8 @@ body {
     color : #F2F2F2;
     font-size: 14px;
     margin-top : 20px;
+    width : 280px;
+    line-height : 20px;
 }
 
 .tweet_imgFrame {

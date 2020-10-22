@@ -22,8 +22,8 @@
     color: white;
     border: 1px solid #04aaff;
     border-radius: 20px;
-    font-weight: 500;
-    font-size: 12px;
+    font-weight: 300;
+    font-size: 14px;
     margin-top : 40px;
 }
   
@@ -58,7 +58,6 @@
     flex-direction: column;
     justify-content: center;
     width: 200px;
-    border-radius: 15px;
     overflow : hidden;
 }
   
@@ -84,9 +83,10 @@
 }
 
 .factory__hello {
-    font-size : 1.5rem;
+    font-size : 1.8rem;
     font-weight: 300;
-    padding-left : 20px;
+    padding-left : 10px;
+    line-height: 2.4rem;
 }
 
 .user__name {

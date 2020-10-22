@@ -1,12 +1,37 @@
 import { dbService, storageService } from "fbase";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faTrash, faPencilAlt, faUserCircle } from "@fortawesome/free-solid-svg-icons";
+import { faTrash, faPencilAlt, faUserCircle, faHeart, faShare } from "@fortawesome/free-solid-svg-icons";
 import "components/Tweet.css";
 
-const Tweet = ({tweetObj, isOwner}) => {
+const Tweet = ({tweetObj, userObj, isOwner}) => {
     const [editing, setEditing] = useState(false); // editing mode인지를 알려주는 boolean
     const [newTweet, setNewTweet] = useState(tweetObj.text); // input에 입력된 text를 가져다 update해줌
+    const [like, setLike] = useState(false);
+
+    useEffect(() => {
+        const userIdx = tweetObj.likedBy.indexOf(userObj.uid);
+        if(userIdx !== -1) {
+            setLike(true);
+        }
+
+        const shareBtn = document.querySelector('.tweet__share');
+        shareBtn.addEventListener("click", shareTweet);
+    }, []);
+
+    const shareTweet = () => {
+        const content = document.querySelector('.tweet_content h4');
+
+        const text = tweetObj.text;
+        const tempInput = document.createElement("input");
+        tempInput.setAttribute("type", "text");
+        content.appendChild(tempInput);
+        tempInput.value = text;
+        tempInput.select();
+        document.execCommand('copy'); // 클립보드에 복사
+        content.removeChild(tempInput);
+        alert('트윗이 클립보드에 복사되었습니다.');
+    };
 
     const onDeleteClick = async () => {
         const ok = window.confirm("Are you sure you want to delete this tweet?");
@@ -20,6 +45,24 @@ const Tweet = ({tweetObj, isOwner}) => {
     };
 
     const toggleEditing = () => setEditing((prev) => !prev);
+
+    const toggleLike = async () => {
+        setLike((prev) => !prev);
+        const thisTweet = {...tweetObj};
+        
+        if(!like) {
+            thisTweet.likedBy.push(userObj.uid);
+        } else {
+            const userIdx = thisTweet.likedBy.indexOf(userObj.uid);
+            if(userIdx !== -1) {
+                thisTweet.likedBy.splice(userIdx, 1);
+            }    
+        }
+
+        await dbService.doc(`tweets/${tweetObj.id}`).update({
+            ...thisTweet
+        });
+    }
     
     const onSubmit = async e => {
         // update tweet 구현
@@ -48,7 +91,6 @@ const Tweet = ({tweetObj, isOwner}) => {
                 </>
             ) : (
                 <>
-                    
                     {tweetObj.creatorImage ? <div className="creator_img_frame"><img className="creator_img" alt="" src={tweetObj.creatorImage} /></div> : <FontAwesomeIcon icon={faUserCircle} size="3x" color={"gray"} />}
                 
                     <div className="tweet_content">
@@ -69,8 +111,15 @@ const Tweet = ({tweetObj, isOwner}) => {
                                 </div>
                             </>
                         )}
+                        <div className="tweet__icons">
+                            <span onClick={toggleLike}>
+                                <FontAwesomeIcon icon={faHeart} size={"lg"} color={like ? "#ff4ca2" : "gray"} />
+                            </span>
+                            <span className="tweet__share">
+                                <FontAwesomeIcon icon={faShare} size={"lg"} color={"gray"} />
+                            </span>
+                        </div>
                     </div>
-                
                 </>
             )}
         </div>

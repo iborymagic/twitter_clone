@@ -30,10 +30,11 @@ const TweetFactory = ({ userObj }) => {
             creatorName : userObj.displayName,
             creatorImage : userObj.profileImage,
             creatorMail : userObj.email,
-            attachmentUrl : attachmentUrl
+            attachmentUrl : attachmentUrl,
+            likedBy : []
         }
         
-        await dbService.collection("tweets").add(tweetObj);
+        await dbService.collection("tweets").doc('' + tweetObj.createdAt).set(tweetObj);
         setTweet("");
         setAttachment("");
     };

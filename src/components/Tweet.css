@@ -22,7 +22,7 @@ body {
     margin-bottom: 20px;
     background-color: #343434;
     width: 100%;
-    max-width: 320px;
+    max-width: 380px;
     padding: 10px;
     border-radius: 10px;
     position: relative;
@@ -51,7 +51,7 @@ body {
     padding : 20px;
     padding-top : 5px;
     padding-right : 0;
-    padding-bottom : 15px;
+    padding-bottom : 5px;
 }
 
 .tweet h1 {
@@ -76,16 +76,16 @@ body {
 .tweet_imgFrame {
     margin-top : 30px;
     height : 150px;
-    width : 220px;
+    width : 280px;
     border-radius : 10px;
     display: flex;
     justify-content: center;
     overflow : hidden;
+    background-color : #282727;
 }
   
 .tweet_img {
     height : 100%;
-    border-radius: 10px;
 }
   
 .tweet__actions {
@@ -100,4 +100,16 @@ body {
   
 .tweet__actions span:first-child {
     margin-right: 10px;
+}
+
+.tweet__icons {
+    margin-top : 30px;
+}
+
+.tweet__icons span {
+    cursor : pointer;
+}
+
+.tweet__icons span:first-child {
+    margin-right : 20px;
 }

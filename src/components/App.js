@@ -14,7 +14,7 @@ function App() {
     // 일종의 이벤트 리스너와 같다. auth의 state에 변화가 있는지를 듣고 있다가, 변화가 생기면 그에 맞는 행동을 취함.
     // user가 로그인하거나, 로그아웃하거나 할 때 변화가 생김.
     authService.onAuthStateChanged((user) => {
-      console.log(user);
+      // console.log(user);
       if(user) {
         //setIsLoggedIn(true);
         setUserObj({

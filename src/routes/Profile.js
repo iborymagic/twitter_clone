@@ -116,7 +116,7 @@ export default ({ refreshUser, userObj }) => {
             </form>
             <form onSubmit={onSubmit} className="profileForm">
                 <input onChange={onChange} type="text" autoFocus placeholder="Display name" value={newDisplayName} className="formInput" />
-                <input type="submit" value={submitting ? "Submitting.." : "Update Profile"} className="formBtn updateBtn" style={{ marginTop : 10 }} />
+                <input type="submit" value={submitting ? "Submitting.." : "Update Profile"} className="formBtn updateBtn" />
             </form>
             <GetMyTweets userObj={userObj} />
             <span className="formBtn logOut" onClick={onSignOutClick}>

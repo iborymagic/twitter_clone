@@ -2,6 +2,8 @@
 
 * {
   box-sizing: border-box;
+  -moz-box-sizing : border-box;
+  -webkit-box-sizing: border-box;
 }
 
 input {
@@ -47,6 +49,7 @@ form {
   max-width: 380px;
   display: flex;
   flex-direction: column;
+  box-sizing: border-box;
 }
 
 .formInput {
@@ -57,21 +60,25 @@ form {
   border: 1px solid #04aaff;
   text-align: center;
   background-color: transparent;
+  max-width: 380px;
   color: white;
+  box-sizing: border-box;
 }
 
 .formBtn {
   cursor: pointer;
-  width: 100%;
+  width: 100%;  
+  max-width: 380px;
   padding: 10px 20px;
   text-align: center;
   color: white;
   border-radius: 20px;
-  cursor: pointer;
+  box-sizing: border-box;
 }
 
 .cancelBtn {
   cursor: pointer;
   margin-top : 5px;
   background-color: tomato;
+  box-sizing: border-box;
 }
